@@ -157,7 +157,7 @@ if not video_link.startswith("http"):
 print(f"🔥 FINAL YOUTUBE LINK: {video_link} 🔥")
 
 # !!! YAHAN APNA TELEGRAM BOT TOKEN DALEIN !!!
-BOT_TOKEN = "YOUR_TELEGRAM_BOT_TOKEN_HERE" 
+BOT_TOKEN = "8625861250:AAFJFd1y_YdBmxgZ2kYoD1N6LmRotb6YQeU" 
 
 message_text = f"READY_TO_UPLOAD\n{video_link}\n{title}\n{full_text}"
 
