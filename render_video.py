@@ -50,8 +50,9 @@ for i, scene in enumerate(scenes_data):
     if scene_duration < 1.0: scene_duration = 1.0
     
     try:
-        # Pexels API orientation=portrait for Shorts
-        res = requests.get(f"[https://api.pexels.com/videos/search?query=](https://api.pexels.com/videos/search?query=){keyword}&per_page=1&orientation=portrait", headers=headers).json()
+        # CLEAN PEXELS API CALL - NO MARKDOWN CORRUPTION
+        pexels_url = f"https://api.pexels.com/videos/search?query={keyword}&per_page=1&orientation=portrait"
+        res = requests.get(pexels_url, headers=headers).json()
         video_url = res['videos'][0]['video_files'][0]['link']
         
         vid_path = f"vid_{i}.mp4"
@@ -131,25 +132,25 @@ video_link = "Upload Failed"
 # UPLOAD LAYERS
 if not video_link.startswith("http"):
     try:
-        res = requests.post("[https://0x0.st](https://0x0.st)", files={'file': open('final_video.mp4', 'rb')}, timeout=600)
+        res = requests.post("https://0x0.st", files={'file': open('final_video.mp4', 'rb')}, timeout=600)
         if res.text.startswith("http"): video_link = res.text.strip()
     except Exception: pass
 
 if not video_link.startswith("http"):
     try:
-        res = requests.post("[https://uguu.se/upload.php](https://uguu.se/upload.php)", files={'files[]': open('final_video.mp4', 'rb')}, timeout=600)
+        res = requests.post("https://uguu.se/upload.php", files={'files[]': open('final_video.mp4', 'rb')}, timeout=600)
         if res.status_code == 200: video_link = res.json()['files'][0]['url']
     except Exception: pass
 
 if not video_link.startswith("http"):
     try:
-        res = requests.post("[https://tmpfiles.org/api/v1/upload](https://tmpfiles.org/api/v1/upload)", files={'file': open('final_video.mp4', 'rb')}, timeout=600)
+        res = requests.post("https://tmpfiles.org/api/v1/upload", files={'file': open('final_video.mp4', 'rb')}, timeout=600)
         if res.status_code == 200: video_link = res.json()['data']['url'].replace('tmpfiles.org/', 'tmpfiles.org/dl/')
     except Exception: pass
 
 if not video_link.startswith("http"):
     try:
-        res = requests.post("[https://catbox.moe/user/api.php](https://catbox.moe/user/api.php)", data={'reqtype': 'fileupload'}, files={'fileToUpload': open('final_video.mp4', 'rb')}, timeout=600)
+        res = requests.post("https://catbox.moe/user/api.php", data={'reqtype': 'fileupload'}, files={'fileToUpload': open('final_video.mp4', 'rb')}, timeout=600)
         if res.text.startswith("http"): video_link = res.text.strip()
     except Exception: pass
 
@@ -157,12 +158,12 @@ if not video_link.startswith("http"):
 print(f"🔥 FINAL YOUTUBE LINK: {video_link} 🔥")
 
 # !!! YAHAN APNA TELEGRAM BOT TOKEN DALEIN !!!
-BOT_TOKEN = "8625861250:AAFJFd1y_YdBmxgZ2kYoD1N6LmRotb6YQeU" 
+BOT_TOKEN = "YOUR_TELEGRAM_BOT_TOKEN_HERE" 
 
 message_text = f"READY_TO_UPLOAD\n{video_link}\n{title}\n{full_text}"
 
 try:
-    telegram_url = f"[https://api.telegram.org/bot](https://api.telegram.org/bot){BOT_TOKEN}/sendMessage"
+    telegram_url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage"
     payload = {
         "chat_id": chat_id, 
         "text": message_text
